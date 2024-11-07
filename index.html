@@ -139,7 +139,7 @@
         document.getElementById("nextBtn").disabled = currentSlide === questions.length - 1;
     }
 </script>
-   <div>
+ <div>
         <label for="participant">Choisissez un participant :</label>
         <select id="participant">
             <option value="Alice">Alice</option>
@@ -154,20 +154,18 @@
     <div id="currentSpeaker">Aucune personne sélectionnée</div>
 
     <script>
-        // Initialisation de Firebase avec votre configuration
+        // Configuration Firebase (avec votre URL de base de données)
         const firebaseConfig = {
-           
-  "auth": null,
-  "resource": {
-    "key": "value"
-  },
-  "path": "/speaker",
-  "method": "get",
-  "time": "2024-11-07T16:59:24.243Z"
-
+            apiKey: "VOTRE_API_KEY",  // Remplacez par votre clé API
+            authDomain: "parole-turn-default-rtdb.firebaseapp.com",  // Domaine de votre projet Firebase
+            databaseURL: "https://parole-turn-default-rtdb.europe-west1.firebasedatabase.app/",  // URL de votre base de données
+            projectId: "parole-turn",  // ID de votre projet Firebase
+            storageBucket: "parole-turn.appspot.com",  // Bucket de stockage
+            messagingSenderId: "VOTRE_SENDER_ID",  // Remplacez par votre senderId
+            appId: "VOTRE_APP_ID"  // Remplacez par votre appId
         };
 
-        // Initialisation de Firebase
+        // Initialisation de Firebase avec la configuration
         const app = firebase.initializeApp(firebaseConfig);
         const database = firebase.database(app);
 
@@ -177,7 +175,7 @@
             const participant = document.getElementById('participant').value;
 
             // Mettre à jour la valeur dans la base de données Firebase
-            database.ref('currentSpeaker').set(participant);
+            database.ref('speaker').set(participant);
         }
 
         // Fonction pour afficher la personne qui parle
@@ -190,8 +188,8 @@
             }
         }
 
-        // Écouter les changements de "currentSpeaker" dans Firebase en temps réel
-        database.ref('currentSpeaker').on('value', (snapshot) => {
+        // Écouter les changements de "speaker" dans Firebase en temps réel
+        database.ref('speaker').on('value', (snapshot) => {
             const currentSpeaker = snapshot.val();
             displayCurrentSpeaker(currentSpeaker);
         });
@@ -199,7 +197,7 @@
         // Mettre à jour la personne qui parle toutes les 5 secondes
         setInterval(() => {
             // Récupérer la personne qui parle actuellement depuis Firebase
-            database.ref('currentSpeaker').once('value', (snapshot) => {
+            database.ref('speaker').once('value', (snapshot) => {
                 const currentSpeaker = snapshot.val();
                 displayCurrentSpeaker(currentSpeaker);
             });
