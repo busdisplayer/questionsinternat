@@ -1,1 +1,46 @@
 <! DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions Internat</title>
+    <!-- Inclusion de W3.CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="shortcut icon" href="https://tse3.mm.bing.net/th?id=OIP.7xI-O4k9h_8to_lPI1DusAHaJu&pid=Api">
+</head>
+<body>
+  <div class="slideshow-container">
+    <!-- Questions -->
+    <div class="question active">Question 1 : Quel est votre nom ?</div>
+    <div class="question">Question 2 : Quel est votre âge ?</div>
+    <div class="question">Question 3 : Quelle est votre couleur préférée ?</div>
+    <div class="question">Question 4 : Où habitez-vous ?</div>
+    <div class="question">Question 5 : Quelle est votre passion ?</div>
+
+    <!-- Boutons de navigation -->
+    <div class="nav-buttons">
+        <button id="prevBtn" onclick="changeSlide(-1)" disabled>Précédent</button>
+        <button id="nextBtn" onclick="changeSlide(1)">Suivant</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const questions = document.querySelectorAll(".question");
+
+    function changeSlide(n) {
+        // Masquer la question actuelle
+        questions[currentSlide].classList.remove("active");
+
+        // Changer l'index du slide
+        currentSlide += n;
+
+        // Afficher la nouvelle question
+        questions[currentSlide].classList.add("active");
+
+        // Désactiver le bouton Précédent au début et Suivant à la fin
+        document.getElementById("prevBtn").disabled = currentSlide === 0;
+        document.getElementById("nextBtn").disabled = currentSlide === questions.length - 1;
+    }
+</script>
+</body>
+</html>
