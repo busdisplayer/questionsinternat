@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"></script>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
   <style>
     .meow-script-regular {
   font-family: "Meow Script", cursive;
@@ -139,6 +140,18 @@
         document.getElementById("nextBtn").disabled = currentSlide === questions.length - 1;
     }
 </script>
+   
+ <div id="qrcode"></div>
 
+    <script>
+        // Lien que vous souhaitez intégrer dans le QR code
+        const url = "https://www.example.com";
+
+        // Générer le QR code à partir de l'URL
+        new QRCode(document.getElementById("qrcode"), url);
+    </script>
+
+</body>
+</html>
 </body>
 </html>
