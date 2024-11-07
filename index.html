@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="shortcut icon" href="https://tse3.mm.bing.net/th?id=OIP.7xI-O4k9h_8to_lPI1DusAHaJu&pid=Api">
   <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"></script>
   <style>
     .meow-script-regular {
   font-family: "Meow Script", cursive;
@@ -137,5 +139,69 @@
         document.getElementById("nextBtn").disabled = currentSlide === questions.length - 1;
     }
 </script>
+   <div>
+        <label for="participant">Choisissez un participant :</label>
+        <select id="participant">
+            <option value="Alice">Alice</option>
+            <option value="Bob">Bob</option>
+            <option value="Charlie">Charlie</option>
+            <option value="David">David</option>
+        </select>
+        <button onclick="updateSpeaker()">Donner la parole</button>
+    </div>
+
+    <h3>La personne qui parle actuellement :</h3>
+    <div id="currentSpeaker">Aucune personne sélectionnée</div>
+
+    <script>
+        // Initialisation de Firebase avec votre configuration
+        const firebaseConfig = {
+            apiKey: "VOTRE_API_KEY",
+            authDomain: "VOTRE_PROJECT_ID.firebaseapp.com",
+            databaseURL: "https://VOTRE_PROJECT_ID.firebaseio.com",
+            projectId: "VOTRE_PROJECT_ID",
+            storageBucket: "VOTRE_PROJECT_ID.appspot.com",
+            messagingSenderId: "VOTRE_SENDER_ID",
+            appId: "VOTRE_APP_ID"
+        };
+
+        // Initialisation de Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(app);
+
+        // Fonction pour mettre à jour la personne qui parle
+        function updateSpeaker() {
+            // Récupérer le participant sélectionné
+            const participant = document.getElementById('participant').value;
+
+            // Mettre à jour la valeur dans la base de données Firebase
+            database.ref('currentSpeaker').set(participant);
+        }
+
+        // Fonction pour afficher la personne qui parle
+        function displayCurrentSpeaker(currentSpeaker) {
+            const speakerElement = document.getElementById('currentSpeaker');
+            if (currentSpeaker) {
+                speakerElement.innerText = currentSpeaker;
+            } else {
+                speakerElement.innerText = "Aucune personne sélectionnée";
+            }
+        }
+
+        // Écouter les changements de "currentSpeaker" dans Firebase en temps réel
+        database.ref('currentSpeaker').on('value', (snapshot) => {
+            const currentSpeaker = snapshot.val();
+            displayCurrentSpeaker(currentSpeaker);
+        });
+
+        // Mettre à jour la personne qui parle toutes les 5 secondes
+        setInterval(() => {
+            // Récupérer la personne qui parle actuellement depuis Firebase
+            database.ref('currentSpeaker').once('value', (snapshot) => {
+                const currentSpeaker = snapshot.val();
+                displayCurrentSpeaker(currentSpeaker);
+            });
+        }, 5000);  // Toutes les 5 secondes
+    </script>
 </body>
 </html>
