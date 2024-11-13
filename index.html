@@ -1,48 +1,46 @@
-<! DOCTYPE html>
+<!DOCTYPE html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions Internat</title>
-    <!-- Inclusion de W3.CSS -->
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questions Internat</title>
+  <!-- Inclusion de W3.CSS -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="shortcut icon" href="https://tse3.mm.bing.net/th?id=OIP.7xI-O4k9h_8to_lPI1DusAHaJu&pid=Api">
   <link href="https://fonts.googleapis.com/css2?family=Meow+Script&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js"></script>
   <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
   <!-- Ajouter Firebase SDK -->
+  
+  <script type="module">
+    // Importation des fonctions nécessaires
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    // Configuration de Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyClQVat-g7a9Bfx348DPUlEvWAOpo3jgvI",
+      authDomain: "parole-turn.firebaseapp.com",
+      databaseURL: "https://parole-turn-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "parole-turn",
+      storageBucket: "parole-turn.firebasestorage.app",
+      messagingSenderId: "708206181079",
+      appId: "1:708206181079:web:64fd5220735b9a2bfd4e92",
+      measurementId: "G-0LC495M44E"
+    };
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyClQVat-g7a9Bfx348DPUlEvWAOpo3jgvI",
-    authDomain: "parole-turn.firebaseapp.com",
-    databaseURL: "https://parole-turn-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "parole-turn",
-    storageBucket: "parole-turn.firebasestorage.app",
-    messagingSenderId: "708206181079",
-    appId: "1:708206181079:web:64fd5220735b9a2bfd4e92",
-    measurementId: "G-0LC495M44E"
-  };
+    // Initialiser Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+  </script>
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase(app);
-</script>
   <style>
     .meow-script-regular {
-  font-family: "Meow Script", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
+      font-family: "Meow Script", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
   </style>
 </head>
 <body>
