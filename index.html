@@ -180,6 +180,95 @@
      questions[currentSlide].style.display = "block";
   }
 </script>
+  <div id="quesDiv" class="w3-container w3-center meow-script-regular w3-display-middle w3-card w3-white w3-round w3-padding-large" style="max-width:600px; width:90%;">
+  <!-- Titre de la section -->
+  <div class="w3-center w3-large meow-script-regular w3-margin-bottom">
+    Partageons un moment ensemble...
+  </div>
+
+  <!-- Formulaire pour la question 1 -->
+  <div class="w3-xlarge w3-margin-bottom question w3-animate-opacity" style="display:block;">
+    <p>Où habitez-vous ?</p>
+    
+    <!-- Champ de saisie pour la réponse -->
+    <input type="text" id="answer1" class="w3-input" placeholder="Votre réponse ici..." />
+
+    <!-- Boutons pour soumettre la réponse ou voir la réponse -->
+    <button class="w3-button w3-green w3-margin-top" onclick="submitAnswer(1)">Soumettre</button>
+    <button class="w3-button w3-blue w3-margin-top" onclick="getAnswer(1)">Voir la réponse soumise</button>
+    <button class="w3-button w3-blue w3-margin-top" onclick="listenForAnswers(1)">Écouter la réponse en temps réel</button>
+  </div>
+
+  <!-- Affichage de la réponse après soumission (optionnel, peut être ajouté dynamiquement) -->
+  <div id="responseDisplay" class="w3-xlarge w3-margin-top" style="display:none;">
+    <p><strong>Réponse soumise:</strong> <span id="responseContent"></span></p>
+  </div>
+
+</div>
+
+<script>
+  // Fonction pour envoyer une donnée à Firebase
+  function submitAnswer(questionNumber) {
+    const answerInput = document.getElementById(`answer${questionNumber}`);
+    const answer = answerInput.value.trim();
+
+    if (answer) {
+      // Enregistrer la réponse dans Firebase sous "questions/Q+n"
+      const questionRef = ref(db, `questions/Q${questionNumber}`);
+      set(questionRef, {
+        answer: answer
+      })
+      .then(() => {
+        alert("Réponse soumise avec succès !");
+        answerInput.disabled = true;  // Désactiver le champ de saisie après soumission
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'envoi des données :", error);
+      });
+    } else {
+      alert("Veuillez saisir une réponse avant de soumettre.");
+    }
+  }
+
+  // Fonction pour récupérer la réponse d'une question spécifique depuis Firebase
+  function getAnswer(questionNumber) {
+    const questionRef = ref(db, `questions/Q${questionNumber}`);
+    
+    // Utilisation de la méthode get() pour récupérer les données
+    get(questionRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          // Si les données existent, afficher la réponse dans le div 'responseDisplay'
+          const answer = snapshot.val().answer;
+          document.getElementById("responseContent").innerText = answer;
+          document.getElementById("responseDisplay").style.display = "block";
+        } else {
+          console.log(`Aucune réponse pour la question ${questionNumber}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des données :", error);
+      });
+  }
+
+  // Fonction pour écouter les réponses en temps réel
+  function listenForAnswers(questionNumber) {
+    const questionRef = ref(db, `questions/Q${questionNumber}`);
+    
+    // Utilisation de onValue() pour écouter les changements en temps réel
+    onValue(questionRef, (snapshot) => {
+      if (snapshot.exists()) {
+        // Si les données existent, afficher la réponse
+        const answer = snapshot.val().answer;
+        document.getElementById("responseContent").innerText = answer;
+        document.getElementById("responseDisplay").style.display = "block";
+      } else {
+        console.log(`Aucune réponse pour la question ${questionNumber}`);
+      }
+    });
+  }
+</script>
+
 </body>
 </html>
 </body>
