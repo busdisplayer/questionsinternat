@@ -24,7 +24,6 @@
 <div id="quesDiv" class="w3-container w3-center meow-script-regular w3-display-middle w3-card w3-white w3-round w3-padding-large" style="max-width:600px; width:90%;">
     <!-- Conteneur du diaporama -->
     <div class="w3-center w3-large meow-script-regular w3-margin-bottom">Partageons un moment ensemble...</div>
-
     <!-- Questions -->
     <div class="w3-xlarge w3-margin-bottom question w3-animate-opacity">
       <p>Démarrez le questionnaire quand vous vous sentez prêt(e)</p>
@@ -118,6 +117,7 @@
     <div class="w3-bar meow-script-regular">
         <button id="prevBtn" class="w3-button w3-blue w3-left w3-round" onclick="changeSlide(-1)" disabled>Précédent</button>
         <button id="nextBtn" class="w3-button w3-blue w3-right w3-round" onclick="changeSlide(1)">Suivant</button>
+      <button id="retake" class="w3-button w3-green w3-right w3-round" onclick="gotoSlide(26)">Revenir où on en était !</button>
     </div>
 </div>
 
@@ -135,7 +135,7 @@
         // Afficher la nouvelle question
         questions[currentSlide].style.display = "block";
 
-      if (currentSlide > 30) {
+      if (currentSlide > 26) {
         document.getElementById("quesDiv").classList.replace("w3-white", "w3-pink");
       } else {
         document.getElementById("quesDiv").classList.replace("w3-pink", "w3-white");
@@ -145,6 +145,12 @@
         document.getElementById("prevBtn").disabled = currentSlide === 0;
         document.getElementById("nextBtn").disabled = currentSlide === questions.length - 1;
     }
+  function gotoSlide(n) {
+       questions[currentSlide].style.display = "none";
+
+    currentSlide = n;
+     questions[currentSlide].style.display = "block";
+  }
 </script>
 </body>
 </html>
